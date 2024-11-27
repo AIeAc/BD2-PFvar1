@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Producto</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- Barra de búsqueda -->
+        <div class="search-container">
+            <h2>Buscar Producto</h2>
+            <form id="productSearchForm">
+                <input type="text" id="searchProduct" placeholder="Nombre del producto" required>
+                <button type="submit">Buscar</button>
+            </form>
+            <ul id="searchResults"></ul>
+        </div>
+
+        <!-- Formulario de registro -->
+        <div class="form-container">
+            <h1>Registro de Producto</h1>
+            <form id="productForm">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Nombre del producto" required>
+
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" name="descripcion" placeholder="Descripción del producto"></textarea>
+
+                <label for="precio">Precio</label>
+                <input type="number" id="precio" name="precio" placeholder="Precio del producto" step="0.01" required>
+
+                <label for="id_categoria">ID Categoría</label>
+                <input type="number" id="id_categoria" name="id_categoria" placeholder="ID de la categoría" required>
+
+                <label for="sku">SKU</label>
+                <input type="text" id="sku" name="sku" placeholder="SKU del producto" required>
+
+                <label for="talla">Talla</label>
+                <input type="text" id="talla" name="talla" placeholder="Talla del producto">
+
+                <label for="color">Color</label>
+                <input type="text" id="color" name="color" placeholder="Color del producto">
+
+                <label for="imagen_url">URL de Imagen</label>
+                <input type="text" id="imagen_url" name="imagen_url" placeholder="URL de la imagen">
+
+                <label for="estado">Estado</label>
+                <select id="estado" name="estado">
+                    <option value="A">Activo</option>
+                    <option value="I">Inactivo</option>
+                </select>
+
+                <button type="submit">Registrar Producto</button>
+            </form>
+            <div id="responseMessage"></div>
+        </div>
+    </div>
+    <script src="../js/processProduct.js"></script>
+    <script src="../js/searchProduct.js"></script>
+</body>
+</html>

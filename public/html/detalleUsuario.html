@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalles del Usuario</title>
+  <link rel="stylesheet" href="../css/detalleUsr.css">
+</head>
+<body>
+  <h1>Detalles del Usuario</h1>
+  <div id="userDetails">
+    <p>Cargando detalles del usuario...</p>
+  </div>
+  <button id="editButton">Editar Usuario</button>
+  <div id="editFormContainer" style="display: none;">
+    <h2>Editar Usuario</h2>
+    <form id="editUserForm">
+      <label for="editNombre">Nombre:</label>
+      <input type="text" id="editNombre" name="nombre" required>
+
+      <label for="editApellidos">Apellidos:</label>
+      <input type="text" id="editApellidos" name="apellidos" required>
+
+      <label for="editEmail">Email:</label>
+      <input type="email" id="editEmail" name="email" required>
+
+      <label for="editTelefono">Teléfono:</label>
+      <input type="text" id="editTelefono" name="telefono">
+
+      <label for="editDireccion">Dirección:</label>
+      <input type="text" id="editDireccion" name="direccion">
+
+      <label for="editTipoUsuario">Tipo de Usuario:</label>
+      <select id="editTipoUsuario" name="tipo_usuario" required>
+        <option value="C">Cliente</option>
+        <option value="A">Administrador</option>
+        <option value="E">Empleado</option>
+      </select>
+
+      <button type="submit">Guardar Cambios</button>
+    </form>
+  </div>
+  <script src="../js/detalleUsuario.js"></script>
+</body>
+</html>
