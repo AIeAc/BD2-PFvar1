@@ -3,7 +3,7 @@ const { getConnection } = require("./connection");
 // Función para insertar un registro en la tabla "usuarios"
 async function insertUser(data) {
   const insertQuery = `
-    INSERT INTO usuarios (
+    INSERT INTO PERSONA (
       NOMBRE, 
       APELLIDOS, 
       EMAIL, 
@@ -120,7 +120,7 @@ async function searchProductsByName(nombre) {
 async function searchUsersByCriteria({ nombre, apellidos, email, tipo_usuario }) {
   let searchQuery = `
       SELECT ID_USUARIO, NOMBRE, APELLIDOS, EMAIL
-      FROM usuarios
+      FROM PERSONA
       WHERE 1=1
   `;
 
@@ -168,7 +168,7 @@ async function searchUsersByCriteria({ nombre, apellidos, email, tipo_usuario })
 async function getUserDetailsById(id) {
   const UserDetailquery = `
       SELECT NOMBRE, APELLIDOS, EMAIL, TELEFONO, DIRECCION, TIPO_USUARIO
-      FROM usuarios
+      FROM PERSONA
       WHERE ID_USUARIO = :id
   `;
 
@@ -207,7 +207,7 @@ async function getUserDetailsById(id) {
 
 async function updateUser(data) {
   const updateQuery = `
-      UPDATE usuarios
+      UPDATE PERSONA
       SET 
           NOMBRE = :nombre,
           APELLIDOS = :apellidos,

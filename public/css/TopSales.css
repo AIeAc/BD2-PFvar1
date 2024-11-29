@@ -81,53 +81,57 @@ nav {
     transform-origin: bottom left;
 }
 
-/* Sección hero */
-.hero {
-    background-image: url('../images/pexels-robin-381450-1020370.jpg'); /* Imagen de fondo */
-    background-size: cover;
-    background-position: center;
-    height: 150vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
+/* Sección Top Sales */
+.top-sales {
     text-align: center;
-    padding: 20px;
+    padding: 50px 20px;
+    animation: fadeIn 1s ease-out;
 }
 
-.hero-content h2 {
-    font-size: 3em;
+.top-sales h2 {
+    font-size: 2.5em;
+    color: #007bff; /* Azul brillante */
     margin-bottom: 20px;
 }
 
-.hero-content p {
-    font-size: 1.3em;
-    margin-bottom: 30px;
-    max-width: 600px;
-    margin: 30px;
-}
-
-.cta-button {
-    padding: 10px 30px;
-    background-color: #00bcd4;
-    color: #fff;
+.top-sales p {
     font-size: 1.2em;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    color: #333;
+    margin-bottom: 30px;
 }
 
-.cta-button:hover {
-    background-color: #0097a7; /* Azul más oscuro */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-items: center;
 }
 
-/* Footer */
-footer {
-    background-color: #1a1a1a; /* Fondo oscuro */
-    color: #fff;
+.gallery-item {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
-    padding: 20px;
-    margin-top: 50px;
+    padding: 10px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.gallery-item h3 {
+    font-size: 1.3em;
+    color: #333;
+    margin-top: 10px;
+}
+
+.gallery-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Animaciones */
@@ -142,6 +146,11 @@ footer {
     }
 }
 
-.hero-content {
-    animation: fadeIn 1s ease-out;
+/* Footer */
+footer {
+    background-color: #1a1a1a; /* Fondo oscuro */
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
 }
