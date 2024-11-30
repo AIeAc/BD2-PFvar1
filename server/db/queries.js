@@ -90,17 +90,31 @@ async function insertProduct(data) {
 }
 
 
-async function searchProductsByName(nombre) {
-    const searchQuery = `
+async function searchProductsByCriteria({ nombre, talla, color }) {
+    let searchQuery = `
         SELECT ID_PRODUCTO, NOMBRE, PRECIO, ESTADO 
-        FROM productos 
-        WHERE NOMBRE LIKE :nombre
+        FROM productos
+        WHERE 1=1
     `;
+    const queryParams = {};
+
+    if (nombre) {
+        searchQuery += " AND NOMBRE LIKE :nombre";
+        queryParams.nombre = `%${nombre}%`;
+    }
+    if (talla) {
+        searchQuery += " AND TALLA LIKE :talla";
+        queryParams.talla = `%${talla}%`;
+    }
+    if (color) {
+        searchQuery += " AND COLOR LIKE :color";
+        queryParams.color = `%${color}%`;
+    }
 
     let connection;
     try {
         connection = await getConnection();
-        const result = await connection.execute(searchQuery, { nombre: `%${nombre}%` });
+        const result = await connection.execute(searchQuery, queryParams);
         return result.rows;
     } catch (error) {
         console.error("Error al buscar productos:", error);
@@ -115,6 +129,8 @@ async function searchProductsByName(nombre) {
         }
     }
 }
+
+
 
 
 async function searchUsersByCriteria({ nombre, apellidos, email, tipo_usuario }) {
@@ -242,7 +258,7 @@ async function getTopSalesProducts() {
       SELECT IMAGEN_URL, ID_PRODUCTO
       FROM productos
       ORDER BY ID_PRODUCTO DESC
-      FETCH FIRST 4 ROWS ONLY
+      FETCH FIRST 8 ROWS ONLY
   `;
 
   let connection;
@@ -494,7 +510,7 @@ async function updateProduct(data) {
 
 
 
-module.exports = { insertUser, insertProduct, searchProductsByName, 
+module.exports = { insertUser, insertProduct, searchProductsByCriteria, 
                    searchUsersByCriteria, getUserDetailsById, updateUser,
                    getTopSalesProducts, getProductDetailsById, addToCart,
                    getProductPrice, getCartItems, deleteFromCart, deleteUser,

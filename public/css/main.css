@@ -86,7 +86,7 @@ nav {
     background-image: url('../images/pexels-robin-381450-1020370.jpg'); /* Imagen de fondo */
     background-size: cover;
     background-position: center;
-    height: 150vh;
+    height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -127,7 +127,7 @@ footer {
     color: #fff;
     text-align: center;
     padding: 20px;
-    margin-top: 50px;
+    margin-top: 0px;
 }
 
 /* Animaciones */

@@ -1,9 +1,19 @@
 document.getElementById("productSearchForm").addEventListener("submit", async (event) => {
     event.preventDefault();
-    const searchQuery = document.getElementById("searchProduct").value;
+
+    // Capturar valores de los campos de búsqueda
+    const searchQuery = document.getElementById("searchProduct").value.trim(); // Elimina espacios en blanco
+    const searchTalla = document.getElementById("searchTalla").value.trim();
+    const searchColor = document.getElementById("searchColor").value.trim();
+
+    // Construir la URL con parámetros opcionales
+    const params = new URLSearchParams();
+    if (searchQuery) params.append("nombre", searchQuery);
+    if (searchTalla) params.append("talla", searchTalla);
+    if (searchColor) params.append("color", searchColor);
 
     try {
-        const response = await fetch(`http://localhost:3000/productos/search?nombre=${encodeURIComponent(searchQuery)}`);
+        const response = await fetch(`http://localhost:3000/productos/search?${params.toString()}`);
         const results = await response.json();
 
         const resultsList = document.getElementById("searchResults");
@@ -14,7 +24,6 @@ document.getElementById("productSearchForm").addEventListener("submit", async (e
                 const li = document.createElement("li");
                 const link = document.createElement("a");
 
-                // Crear el enlace al detalle del producto
                 link.href = `../html/detallleProducto.html?id=${product[0]}`; // product[0] es ID_PRODUCTO
                 link.textContent = `Nombre: ${product[1]}, Precio: ${product[2]}, Estado: ${product[3]}`;
                 link.style.textDecoration = "none";

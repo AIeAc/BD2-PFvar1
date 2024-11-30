@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { insertUser, insertProduct, searchProductsByName, searchUsersByCriteria, getUserDetailsById, 
+const { insertUser, insertProduct, searchProductsByCriteria, searchUsersByCriteria, getUserDetailsById, 
         updateUser, getTopSalesProducts, getProductDetailsById, addToCart, getProductPrice, getCartItems,
         deleteFromCart, deleteProduct, deleteUser, updateProduct } = require("./db/queries");
 
@@ -47,20 +47,21 @@ app.post("/registerProduct", async (req, res) => {
 });
 
 app.get("/productos/search", async (req, res) => {
-    const { nombre } = req.query;
+    const { nombre, talla, color } = req.query;
 
-    if (!nombre) {
-        return res.status(400).json({ error: "El parámetro 'nombre' es obligatorio." });
+    if (!nombre && !talla && !color) {
+        return res.status(400).json({ error: "Al menos un parámetro de búsqueda es obligatorio." });
     }
 
     try {
-        const results = await searchProductsByName(nombre);
+        const results = await searchProductsByCriteria({ nombre, talla, color });
         res.json(results);
     } catch (error) {
         console.error("Error al buscar productos:", error);
         res.status(500).json({ error: "Error interno del servidor." });
     }
 });
+
 
 //const { searchUsersByCriteria } = require("./db/queries");
 
