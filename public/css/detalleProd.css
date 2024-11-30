@@ -143,3 +143,84 @@ footer {
 #deleteProductBtn:hover {
     background-color: #c0392b;
 }
+
+
+/* Botón "Editar Producto" */
+#editButton {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#editButton:hover {
+    background-color: #2980b9;
+}
+
+/* Contenedor del formulario de edición */
+#editFormContainer {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Oculto por defecto */
+}
+
+/* Estilo general de los inputs en el formulario */
+#editFormContainer input,
+#editFormContainer textarea,
+#editFormContainer select,
+#editFormContainer button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Botón "Guardar Cambios" */
+#editFormContainer button[type="submit"] {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#editFormContainer button[type="submit"]:hover {
+    background-color: #218c53;
+}
+
+
+/* Botón "Ver Carrito" estilo blanco con borde negro */
+#viewCartBtn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #333; /* Texto negro */
+    background-color: white;
+    border: 2px solid #333; /* Borde negro */
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    text-decoration: none; /* Eliminar subrayado en enlaces */
+    display: inline-block; /* Asegura el tamaño del botón */
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Animaciones suaves */
+}
+
+#viewCartBtn:hover {
+    background-color: #333; /* Fondo negro al pasar el cursor */
+    color: white; /* Texto blanco al pasar el cursor */
+}
+
+#viewCartBtn:active {
+    background-color: #555; /* Fondo gris oscuro al hacer clic */
+    color: white;
+}

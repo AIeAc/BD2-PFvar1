@@ -17,6 +17,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("product-price").textContent = `Precio: $${product.PRECIO}`;
             document.getElementById("product-image").src = product.IMAGEN_URL;
             document.getElementById("product-image").alt = product.NOMBRE;
+
+            // Llenar formulario de edición
+            document.getElementById("editName").value = product.NOMBRE;
+            document.getElementById("editDescription").value = product.DESCRIPCION;
+            document.getElementById("editPrice").value = product.PRECIO;
+            document.getElementById("editImage").value = product.IMAGEN_URL;
         } else {
             document.getElementById("product-details").innerHTML = "<p>Producto no encontrado.</p>";
         }
@@ -24,6 +30,46 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error("Error al cargar los detalles del producto:", error);
         document.getElementById("product-details").innerHTML = "<p>Error al cargar los detalles del producto.</p>";
     }
+
+    // Mostrar formulario de edición
+    document.getElementById("editButton").addEventListener("click", () => {
+        document.getElementById("editFormContainer").style.display = "block";
+    });
+
+    // Manejar el envío del formulario de edición
+    document.getElementById("editProductForm").addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const updatedProduct = {
+            id: productId,
+            nombre: document.getElementById("editName").value,
+            descripcion: document.getElementById("editDescription").value,
+            precio: document.getElementById("editPrice").value,
+            imagen_url: document.getElementById("editImage").value,
+        };
+
+        try {
+            const response = await fetch(`http://localhost:3000/productos/update`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updatedProduct),
+            });
+
+            if (response.ok) {
+                alert("Producto actualizado exitosamente.");
+                location.reload(); // Recargar la página para reflejar los cambios
+            } else {
+                const error = await response.json();
+                alert(`Error al actualizar el producto: ${error.error}`);
+            }
+        } catch (error) {
+            console.error("Error al actualizar el producto:", error);
+            alert("Hubo un problema al actualizar el producto.");
+        }
+    });
+
 
     // Manejar el botón "Agregar al carrito"
     const addToCartBtn = document.getElementById("addToCartBtn");

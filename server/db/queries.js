@@ -462,7 +462,40 @@ async function deleteProduct(productId) {
 }
 
 
+async function updateProduct(data) {
+    const updateQuery = `
+        UPDATE PRODUCTOS
+        SET 
+            NOMBRE = :nombre,
+            DESCRIPCION = :descripcion,
+            PRECIO = :precio,
+            IMAGEN_URL = :imagen_url
+        WHERE ID_PRODUCTO = :id
+    `;
+
+    let connection;
+    try {
+        connection = await getConnection();
+        await connection.execute(updateQuery, data, { autoCommit: true });
+        console.log("Producto actualizado correctamente.");
+    } catch (error) {
+        console.error("Error al actualizar el producto:", error);
+        throw error;
+    } finally {
+        if (connection) {
+            try {
+                await connection.close();
+            } catch (err) {
+                console.error("Error al cerrar la conexión:", err);
+            }
+        }
+    }
+}
+
+
+
 module.exports = { insertUser, insertProduct, searchProductsByName, 
                    searchUsersByCriteria, getUserDetailsById, updateUser,
                    getTopSalesProducts, getProductDetailsById, addToCart,
-                   getProductPrice, getCartItems, deleteFromCart, deleteUser, deleteProduct };
+                   getProductPrice, getCartItems, deleteFromCart, deleteUser,
+                   deleteProduct, updateProduct };

@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { insertUser, insertProduct, searchProductsByName, searchUsersByCriteria, getUserDetailsById, 
         updateUser, getTopSalesProducts, getProductDetailsById, addToCart, getProductPrice, getCartItems,
-        deleteFromCart, deleteProduct, deleteUser } = require("./db/queries");
+        deleteFromCart, deleteProduct, deleteUser, updateProduct } = require("./db/queries");
 
 const app = express();
 const port = 3000;
@@ -232,6 +232,23 @@ app.delete("/productos/delete", async (req, res) => {
         res.status(500).json({ error: "Error interno del servidor." });
     }
 });
+
+app.put("/productos/update", async (req, res) => {
+    const { id, nombre, descripcion, precio, imagen_url } = req.body;
+
+    if (!id || !nombre || !precio) {
+        return res.status(400).json({ error: "Los campos ID, nombre y precio son obligatorios." });
+    }
+
+    try {
+        await updateProduct({ id, nombre, descripcion, precio, imagen_url });
+        res.status(200).json({ message: "Producto actualizado correctamente." });
+    } catch (error) {
+        console.error("Error al actualizar el producto:", error);
+        res.status(500).json({ error: "Error interno del servidor." });
+    }
+});
+
 
 
 // Inicia el servidor
