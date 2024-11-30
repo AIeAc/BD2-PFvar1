@@ -104,3 +104,22 @@ h1 {
 .success-message {
     color: #5bc0de;
 }
+
+#deleteUserBtn {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.2em;
+    color: white;
+    background-color: #e74c3c;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#deleteUserBtn:hover {
+    background-color: #c0392b;
+}
+

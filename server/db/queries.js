@@ -92,7 +92,7 @@ async function insertProduct(data) {
 
 async function searchProductsByName(nombre) {
     const searchQuery = `
-        SELECT NOMBRE, PRECIO, ESTADO 
+        SELECT ID_PRODUCTO, NOMBRE, PRECIO, ESTADO 
         FROM productos 
         WHERE NOMBRE LIKE :nombre
     `;
@@ -237,7 +237,232 @@ async function updateUser(data) {
   }
 }
 
+async function getTopSalesProducts() {
+  const query = `
+      SELECT IMAGEN_URL, ID_PRODUCTO
+      FROM productos
+      ORDER BY ID_PRODUCTO DESC
+      FETCH FIRST 4 ROWS ONLY
+  `;
+
+  let connection;
+  try {
+      connection = await getConnection();
+      const result = await connection.execute(query);
+      return result.rows.map(row => ({ IMAGEN_URL: row[0], ID_PRODUCTO: row[1] }));  // Transforma los resultados
+  } catch (error) {
+      console.error("Error al obtener los productos más vendidos:", error);
+      throw error;
+  } finally {
+      if (connection) {
+          try {
+              await connection.close();
+          } catch (err) {
+              console.error("Error al cerrar la conexión:", err);
+          }
+      }
+  }
+}
+
+async function getProductDetailsById(id) {
+  const query = `
+      SELECT NOMBRE, DESCRIPCION, PRECIO, IMAGEN_URL
+      FROM productos
+      WHERE ID_PRODUCTO = :id
+  `;
+
+  let connection;
+  try {
+      connection = await getConnection();
+      const result = await connection.execute(query, { id });
+      if (result.rows.length > 0) {
+          const product = result.rows[0];
+          return {
+              NOMBRE: product[0],
+              DESCRIPCION: product[1],
+              PRECIO: product[2],
+              IMAGEN_URL: product[3]
+          };
+      }
+      return null; // Si no se encuentra el producto
+  } catch (error) {
+      console.error("Error al ejecutar la consulta:", error);
+      throw error;
+  } finally {
+      if (connection) {
+          try {
+              await connection.close();
+          } catch (err) {
+              console.error("Error al cerrar la conexión:", err);
+          }
+      }
+  }
+}
+
+
+async function addToCart(productId, productPrice) {
+    const query = `
+        INSERT INTO CARRITO_PRODUCTOS (ID_PRODUCTO, CANTIDAD, PRECIO_UNITARIO)
+        VALUES (:productId, 1, :productPrice)
+    `;
+
+    let connection;
+    try {
+        connection = await getConnection();
+        await connection.execute(query, { productId, productPrice }, { autoCommit: true });
+    } catch (error) {
+        console.error("Error al agregar producto al carrito:", error);
+        throw error;
+    } finally {
+        if (connection) {
+            try {
+                await connection.close();
+            } catch (err) {
+                console.error("Error al cerrar la conexión:", err);
+            }
+        }
+    }
+}
 
 
 
-module.exports = { insertUser, insertProduct, searchProductsByName, searchUsersByCriteria, getUserDetailsById, updateUser };
+async function getProductPrice(productId) {
+    const query = `
+        SELECT PRECIO
+        FROM PRODUCTOS
+        WHERE ID_PRODUCTO = :productId
+    `;
+
+    let connection;
+    try {
+        connection = await getConnection();
+        const result = await connection.execute(query, { productId });
+        if (result.rows.length > 0) {
+            return result.rows[0][0]; // Retorna el precio del producto
+        }
+        return null; // Producto no encontrado
+    } catch (error) {
+        console.error("Error al obtener el precio del producto:", error);
+        throw error;
+    } finally {
+        if (connection) {
+            try {
+                await connection.close();
+            } catch (err) {
+                console.error("Error al cerrar la conexión:", err);
+            }
+        }
+    }
+}
+
+
+async function getCartItems() {
+    const query = `
+        SELECT p.IMAGEN_URL, p.NOMBRE, cp.PRECIO_UNITARIO, cp.ID_PRODUCTO
+        FROM CARRITO_PRODUCTOS cp
+        JOIN PRODUCTOS p ON cp.ID_PRODUCTO = p.ID_PRODUCTO
+    `;
+
+    let connection;
+    try {
+        connection = await getConnection();
+        const result = await connection.execute(query);
+        return result.rows.map((row) => ({
+            IMAGEN_URL: row[0],
+            NOMBRE: row[1],
+            PRECIO_UNITARIO: row[2],
+            ID_PRODUCTO: row[3], // Asegúrate de incluir este campo
+        }));
+    } catch (error) {
+        console.error("Error al obtener los productos del carrito:", error);
+        throw error;
+    } finally {
+        if (connection) {
+            try {
+                await connection.close();
+            } catch (err) {
+                console.error("Error al cerrar la conexión:", err);
+            }
+        }
+    }
+}
+
+
+async function deleteFromCart(productId) {
+    const query = `
+        DELETE FROM CARRITO_PRODUCTOS
+        WHERE ID_PRODUCTO = :productId
+    `;
+
+    let connection;
+    try {
+        connection = await getConnection();
+        await connection.execute(query, { productId }, { autoCommit: true });
+    } catch (error) {
+        console.error("Error al eliminar producto del carrito:", error);
+        throw error;
+    } finally {
+        if (connection) {
+            try {
+                await connection.close();
+            } catch (err) {
+                console.error("Error al cerrar la conexión:", err);
+            }
+        }
+    }
+}
+
+
+async function deleteUser(userId) {
+    const query = `
+        DELETE FROM PERSONA
+        WHERE ID_USUARIO = :userId
+    `;
+
+    let connection;
+    try {
+        connection = await getConnection();
+        await connection.execute(query, { userId }, { autoCommit: true });
+    } catch (error) {
+        console.error("Error al eliminar usuario:", error);
+        throw error;
+    } finally {
+        if (connection) {
+            try {
+                await connection.close();
+            } catch (err) {
+                console.error("Error al cerrar la conexión:", err);
+            }
+        }
+    }
+}
+
+async function deleteProduct(productId) {
+    const query = `
+        DELETE FROM PRODUCTOS
+        WHERE ID_PRODUCTO = :productId
+    `;
+
+    let connection;
+    try {
+        connection = await getConnection();
+        await connection.execute(query, { productId }, { autoCommit: true });
+    } catch (error) {
+        console.error("Error al eliminar producto:", error);
+        throw error;
+    } finally {
+        if (connection) {
+            try {
+                await connection.close();
+            } catch (err) {
+                console.error("Error al cerrar la conexión:", err);
+            }
+        }
+    }
+}
+
+
+module.exports = { insertUser, insertProduct, searchProductsByName, 
+                   searchUsersByCriteria, getUserDetailsById, updateUser,
+                   getTopSalesProducts, getProductDetailsById, addToCart,
+                   getProductPrice, getCartItems, deleteFromCart, deleteUser, deleteProduct };

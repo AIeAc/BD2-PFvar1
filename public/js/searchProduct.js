@@ -12,7 +12,15 @@ document.getElementById("productSearchForm").addEventListener("submit", async (e
         if (results.length > 0) {
             results.forEach((product) => {
                 const li = document.createElement("li");
-                li.textContent = `Nombre: ${product[0]}, Precio: ${product[1]}, Estado: ${product[2]}`;
+                const link = document.createElement("a");
+
+                // Crear el enlace al detalle del producto
+                link.href = `../html/detallleProducto.html?id=${product[0]}`; // product[0] es ID_PRODUCTO
+                link.textContent = `Nombre: ${product[1]}, Precio: ${product[2]}, Estado: ${product[3]}`;
+                link.style.textDecoration = "none";
+                link.style.color = "blue";
+
+                li.appendChild(link);
                 resultsList.appendChild(li);
             });
         } else {
@@ -25,5 +33,4 @@ document.getElementById("productSearchForm").addEventListener("submit", async (e
         const resultsList = document.getElementById("searchResults");
         resultsList.innerHTML = "<li>Error al buscar productos. Verifica la consola para más detalles.</li>";
     }
-    
 });

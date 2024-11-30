@@ -70,3 +70,30 @@ document.getElementById("editUserForm").addEventListener("submit", (event) => {
             alert("Hubo un problema al actualizar el usuario.");
         });
 });
+
+// Manejar el botón "Eliminar Usuario"
+document.getElementById("deleteUserBtn").addEventListener("click", async () => {
+    if (confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
+        try {
+            const response = await fetch(`http://localhost:3000/usuarios/delete`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ userId }),
+            });
+
+            if (response.ok) {
+                alert("Usuario eliminado exitosamente.");
+                window.location.href = "/usuarios.html"; // Redirigir a la lista de usuarios
+            } else {
+                const error = await response.json();
+                alert(`Error al eliminar el usuario: ${error.error}`);
+            }
+        } catch (error) {
+            console.error("Error al eliminar el usuario:", error);
+            alert("Hubo un problema al eliminar el usuario.");
+        }
+    }
+});
+
