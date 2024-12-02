@@ -28,7 +28,7 @@ async function insertUser(data) {
   try {
     connection = await getConnection();
     await connection.execute(insertQuery, data, { autoCommit: true });
-    console.log("Registro insertado en la tabla usuarios.");
+    console.log("Registro insertado en la tabla persona.");
   } catch (error) {
     console.error("Error al insertar en usuarios:", error);
     throw error;
