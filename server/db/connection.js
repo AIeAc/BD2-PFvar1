@@ -2,9 +2,9 @@ const oracledb = require("oracledb");
 
 // Configuración de la base de datos
 const dbConfig = {
-  user: "pablito", // Cambiar por tu usuario de Oracle
-  password: "oracle1", // Cambiar por tu contraseña de Oracle
-  connectString: "192.9.157.22:1521/MYPDB" // Cambiar por tu cadena de conexión
+  user: "pablito",
+  password: "oracle1",
+  connectString: "192.9.157.22:1521/MYPDB"
 };
 
 // Función para obtener una conexión
